@@ -39,6 +39,8 @@ function App() {
   }, [location.pathname]);
 
   const fetchAuthUser = () => {
+    const token = sessionStorage.getItem('token');
+    console.log('this is a token', token);
     const xhr = new XMLHttpRequest();
     
     xhr.open("GET", "https://fin-tracking-backend.vercel.app/api/v1/auth/user", true);

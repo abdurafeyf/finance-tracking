@@ -44,7 +44,6 @@ function App() {
     const xhr = new XMLHttpRequest();
     
     xhr.open("GET", "https://fin-tracking-backend.vercel.app/api/v1/auth/user", true);
-    xhr.withCredentials = true;
   
     xhr.onload = () => {
       if (xhr.status === 200) {

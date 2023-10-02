@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-import { BrowserRouter as Router, Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import GoogleButton from "react-google-button";
 import { LoginSuccess } from "./containers/LoginSuccess";
 import axios from "axios";
@@ -78,7 +78,6 @@ function App() {
           if (newWindow.closed) {
             clearInterval(timer);
             clearTimeout(timeout);
-            console.log("Yay, we're authenticated");
             fetchAuthUser();
             resolve();
             navigate('/welcome');

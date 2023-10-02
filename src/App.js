@@ -29,10 +29,6 @@ function App() {
   const location = useLocation();
 
   useEffect(() => {
-    fetchAuthUser();
-  }, []);
-
-  useEffect(() => {
     document.querySelector('html').style.scrollBehavior = 'auto'
     window.scroll({ top: 0 })
     document.querySelector('html').style.scrollBehavior = ''

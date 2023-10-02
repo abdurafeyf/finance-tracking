@@ -38,40 +38,68 @@ function App() {
     document.querySelector('html').style.scrollBehavior = ''
   }, [location.pathname]);
 
+  // const fetchAuthUser = () => {
+  //   const token = sessionStorage.getItem('token');
+  //   console.log('this is a token', token);
+  //   const xhr = new XMLHttpRequest();
+  //   xhr.setRequestHeader('Access-Control-Allow-Headers', '*');
+  //   xhr.setRequestHeader('Content-type', 'application/ecmascript');
+  //   xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+  //   xhr.open("GET", "https://fin-tracking-backend.vercel.app/auth/user", true);
+  //   xhr.withCredentials = true;
+  //   xhr.onload = () => {
+  //     if (xhr.status === 200) {
+  //       console.log('test', xhr.responseText);
+  //       // const responseData = JSON.parse(xhr.responseText);
+  //       // console.log("User: ", responseData);
+  //       // // Assuming you have access to dispatch functions
+  //       // dispatch(setIsAuthenticated(true));
+  //       // dispatch(setAuthUser(responseData));
+  //     } else {
+  //       console.log('in else');
+  //       // console.log("Not properly authenticated");
+  //       // Assuming you have access to dispatch functions
+  //       // dispatch(setIsAuthenticated(false));
+  //       // dispatch(setAuthUser(null));
+  //     }
+  //   };
+  
+  //   xhr.onerror = () => {
+  //     console.error("An error occurred while making the request.");
+  //   };
+  
+  //   xhr.send();
+  // };
+  
   const fetchAuthUser = () => {
     const token = sessionStorage.getItem('token');
     console.log('this is a token', token);
     const xhr = new XMLHttpRequest();
-    xhr.setRequestHeader('Access-Control-Allow-Headers', '*');
-    xhr.setRequestHeader('Content-type', 'application/ecmascript');
-    xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+  
     xhr.open("GET", "https://fin-tracking-backend.vercel.app/auth/user", true);
     xhr.withCredentials = true;
+    xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+    xhr.setRequestHeader('Content-type', 'application/json'); // Changed 'application/ecmascript' to 'application/json'
+  
     xhr.onload = () => {
       if (xhr.status === 200) {
-        console.log('test', xhr.responseText);
-        // const responseData = JSON.parse(xhr.responseText);
-        // console.log("User: ", responseData);
-        // // Assuming you have access to dispatch functions
-        // dispatch(setIsAuthenticated(true));
-        // dispatch(setAuthUser(responseData));
+        console.log('Response:', xhr.responseText);
+        const responseData = JSON.parse(xhr.responseText);
+        console.log("User: ", responseData);
+        // You can dispatch your actions here if needed.
       } else {
-        console.log('in else');
-        // console.log("Not properly authenticated");
-        // Assuming you have access to dispatch functions
-        // dispatch(setIsAuthenticated(false));
-        // dispatch(setAuthUser(null));
+        console.error('Request failed with status:', xhr.status);
+        // Handle the error or dispatch appropriate actions here.
       }
     };
   
     xhr.onerror = () => {
       console.error("An error occurred while making the request.");
+      // Handle the error or dispatch appropriate actions here.
     };
   
     xhr.send();
-  };
-  
-
+  };  
   const redirectToGoogleSSO = async () => {
     const googleLoginURL = "https://fin-tracking-backend.vercel.app/api/v1/login/google";
     const newWindow = window.open(

@@ -47,7 +47,7 @@ function App() {
     xhr.withCredentials = true;
     xhr.onload = () => {
       if (xhr.status === 200) {
-        console.log('test', JSON.parse(xhr.responseText));
+        console.log('test', xhr.responseText);
         // const responseData = JSON.parse(xhr.responseText);
         // console.log("User: ", responseData);
         // // Assuming you have access to dispatch functions

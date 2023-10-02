@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.0.18",
     "@material-tailwind/react": "^2.1.2",
     "@reduxjs/toolkit": "^1.9.6",
@@ -14,6 +15,7 @@
     "chart.js": "^4.3.0",
     "chartjs-adapter-moment": "^1.0.1",
     "cookie": "^0.5.0",
+    "flowbite-react": "^0.6.3",
     "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -54,6 +56,7 @@
     ]
   },
   "devDependencies": {
+    "daisyui": "^3.8.2",
     "tailwindcss": "^3.3.3"
   }
 }

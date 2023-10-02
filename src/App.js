@@ -42,7 +42,9 @@ function App() {
     const token = sessionStorage.getItem('token');
     console.log('this is a token', token);
     const xhr = new XMLHttpRequest();
-    
+    xhr.setRequestHeader('Access-Control-Allow-Headers', '*');
+    xhr.setRequestHeader('Content-type', 'application/ecmascript');
+    xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
     xhr.open("GET", "https://fin-tracking-backend.vercel.app/auth/user", true);
     xhr.withCredentials = true;
     xhr.onload = () => {
@@ -74,7 +76,7 @@ function App() {
     const googleLoginURL = "https://fin-tracking-backend.vercel.app/api/v1/login/google";
     const newWindow = window.open(
       googleLoginURL,
-      "_self",
+      "_blank",
       "width=500,height=600"
     );
   

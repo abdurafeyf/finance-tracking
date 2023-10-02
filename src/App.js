@@ -43,20 +43,22 @@ function App() {
     console.log('this is a token', token);
     const xhr = new XMLHttpRequest();
     
-    xhr.open("GET", "https://fin-tracking-backend.vercel.app/api/v1/auth/user", true);
-  
+    xhr.open("GET", "https://fin-tracking-backend.vercel.app", true);
+    xhr.withCredentials = true;
     xhr.onload = () => {
       if (xhr.status === 200) {
-        const responseData = JSON.parse(xhr.responseText);
-        console.log("User: ", responseData);
-        // Assuming you have access to dispatch functions
-        dispatch(setIsAuthenticated(true));
-        dispatch(setAuthUser(responseData));
+        console.log('test', JSON.parse(xhr.responseText));
+        // const responseData = JSON.parse(xhr.responseText);
+        // console.log("User: ", responseData);
+        // // Assuming you have access to dispatch functions
+        // dispatch(setIsAuthenticated(true));
+        // dispatch(setAuthUser(responseData));
       } else {
-        console.log("Not properly authenticated");
+        console.log('in else');
+        // console.log("Not properly authenticated");
         // Assuming you have access to dispatch functions
-        dispatch(setIsAuthenticated(false));
-        dispatch(setAuthUser(null));
+        // dispatch(setIsAuthenticated(false));
+        // dispatch(setAuthUser(null));
       }
     };
   

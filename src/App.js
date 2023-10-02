@@ -74,7 +74,7 @@ function App() {
     const googleLoginURL = "https://fin-tracking-backend.vercel.app/api/v1/login/google";
     const newWindow = window.open(
       googleLoginURL,
-      "_blank",
+      "_self",
       "width=500,height=600"
     );
   

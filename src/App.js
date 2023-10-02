@@ -35,53 +35,42 @@ function App() {
   }, [location.pathname]);
 
   const fetchAuthUser = async () => {
-    try {
-      const response = await axios.get("https://fin-tracking-backend.vercel.app/api/v1/auth/user", { withCredentials: true });
+    const response = await axios
+      .get("https://fin-tracking-backend.vercel.app/api/v1/auth/user", { withCredentials: true })
+      .catch((err) => {
+        console.log("Not properly authenticated");
+        dispatch(setIsAuthenticated(false));
+        dispatch(setAuthUser(null));
+        navigate("/login/error");
+      });
+
+    if (response && response.data) {
       console.log("User: ", response.data);
       dispatch(setIsAuthenticated(true));
       dispatch(setAuthUser(response.data));
-    } catch (error) {
-      console.error("Error fetching auth user:", error);
-      dispatch(setIsAuthenticated(false));
-      dispatch(setAuthUser(null));
+      navigate("/welcome");
     }
-  };  
+  };
 
   const redirectToGoogleSSO = async () => {
+    let timer = null;
     const googleLoginURL = "https://fin-tracking-backend.vercel.app/api/v1/login/google";
     const newWindow = window.open(
       googleLoginURL,
       "_blank",
       "width=500,height=600"
     );
-  
-    if (!newWindow) {
-      console.error("Failed to open Google SSO window");
-      return;
+
+    if (newWindow) {
+      timer = setInterval(() => {
+        if (newWindow.closed) {
+          console.log("Yay we're authenticated");
+          fetchAuthUser();
+          if (timer) clearInterval(timer);
+        }
+      }, 500);
     }
-  
-    try {
-      await new Promise((resolve, reject) => {
-        const timeout = setTimeout(() => {
-          clearInterval(timer);
-          reject(new Error("Authentication timed out"));
-        }, 60000);
-  
-        const timer = setInterval(() => {
-          if (newWindow.closed) {
-            clearInterval(timer);
-            clearTimeout(timeout);
-            fetchAuthUser();
-            resolve();
-            navigate('/welcome');
-          }
-        }, 10000);
-      });
-    } catch (error) {
-      console.error("Authentication error:", error);
-      navigate('/login/error');
-    }
-  };  
+  };
 
   return (
     <>

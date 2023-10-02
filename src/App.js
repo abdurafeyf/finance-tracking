@@ -35,20 +35,17 @@ function App() {
   }, [location.pathname]);
 
   const fetchAuthUser = async () => {
-    const response = await axios
-      .get("https://fin-tracking-backend.vercel.app/api/v1/auth/user", { withCredentials: true })
-      .catch((err) => {
-        console.log("Not properly authenticated");
-        dispatch(setIsAuthenticated(false));
-        dispatch(setAuthUser(null));
-      });
-
-    if (response && response.data) {
+    try {
+      const response = await axios.get("https://fin-tracking-backend.vercel.app/api/v1/auth/user", { withCredentials: true });
       console.log("User: ", response.data);
       dispatch(setIsAuthenticated(true));
       dispatch(setAuthUser(response.data));
+    } catch (error) {
+      console.error("Error fetching auth user:", error);
+      dispatch(setIsAuthenticated(false));
+      dispatch(setAuthUser(null));
     }
-  };
+  };  
 
   const redirectToGoogleSSO = async () => {
     const googleLoginURL = "https://fin-tracking-backend.vercel.app/api/v1/login/google";
@@ -68,7 +65,7 @@ function App() {
         const timeout = setTimeout(() => {
           clearInterval(timer);
           reject(new Error("Authentication timed out"));
-        }, 60000); // Set a reasonable timeout (e.g., 60 seconds)
+        }, 60000);
   
         const timer = setInterval(() => {
           if (newWindow.closed) {
@@ -78,7 +75,7 @@ function App() {
             resolve();
             navigate('/welcome');
           }
-        }, 500);
+        }, 10000);
       });
     } catch (error) {
       console.error("Authentication error:", error);

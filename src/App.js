@@ -38,21 +38,34 @@ function App() {
     document.querySelector('html').style.scrollBehavior = ''
   }, [location.pathname]);
 
-  const fetchAuthUser = async () => {
-    const response = await axios
-      .get("https://fin-tracking-backend.vercel.app/api/v1/auth/user", { withCredentials: true })
-      .catch((err) => {
+  const fetchAuthUser = () => {
+    const xhr = new XMLHttpRequest();
+    
+    xhr.open("GET", "https://fin-tracking-backend.vercel.app/api/v1/auth/user", true);
+    xhr.withCredentials = true;
+  
+    xhr.onload = () => {
+      if (xhr.status === 200) {
+        const responseData = JSON.parse(xhr.responseText);
+        console.log("User: ", responseData);
+        // Assuming you have access to dispatch functions
+        dispatch(setIsAuthenticated(true));
+        dispatch(setAuthUser(responseData));
+      } else {
         console.log("Not properly authenticated");
+        // Assuming you have access to dispatch functions
         dispatch(setIsAuthenticated(false));
         dispatch(setAuthUser(null));
-      });
-
-    if (response && response.data) {
-      console.log("User: ", response.data);
-      dispatch(setIsAuthenticated(true));
-      dispatch(setAuthUser(response.data));
-    }
+      }
+    };
+  
+    xhr.onerror = () => {
+      console.error("An error occurred while making the request.");
+    };
+  
+    xhr.send();
   };
+  
 
   const redirectToGoogleSSO = async () => {
     const googleLoginURL = "https://fin-tracking-backend.vercel.app/api/v1/login/google";

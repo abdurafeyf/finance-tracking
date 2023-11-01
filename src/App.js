@@ -36,7 +36,7 @@ function App() {
 
   const fetchAuthUser = async () => {
     const response = await axios
-      .get("https://fin-tracking-backend.vercel.app/api/v1/auth/user", { withCredentials: true })
+      .get("http://localhost:5000/api/v1/auth/user", { withCredentials: true })
       .catch((err) => {
         console.log("Not properly authenticated");
         dispatch(setIsAuthenticated(false));
@@ -54,7 +54,7 @@ function App() {
 
   const redirectToGoogleSSO = async () => {
     let timer = null;
-    const googleLoginURL = "https://fin-tracking-backend.vercel.app/api/v1/login/google";
+    const googleLoginURL = "http://localhost:5000/api/v1/login/google";
     const newWindow = window.open(
       googleLoginURL,
       "_blank",
